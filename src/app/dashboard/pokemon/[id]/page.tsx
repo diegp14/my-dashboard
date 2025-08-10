@@ -3,12 +3,13 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata(props: Props) {
+  const params = await props.params;
 
   try {
     const pokemon = await getPokemon(params.id);
@@ -17,14 +18,11 @@ export async function generateMetadata({ params }: Props) {
       description: `Details about ${pokemon.name}`
     };
   } catch (error) {
-    console.error(error)
     return {
       title: 'Pokemon Not Found',
       description: 'The pokemon you are looking for does not exist.'
     };
   }
-
-
 }
 
 const getPokemon = async (id: string): Promise<Pokemon> => {
@@ -36,14 +34,14 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
   ).then(res => res.json());
   return pokemon;
   } catch (error) {
-    console.error(error)
       notFound();
   }
   
 }
 
 
-export default async function PokemonPage({ params }: Props) {
+export default async function PokemonPage(props: Props) {
+  const params = await props.params;
 
   const pokemon = await getPokemon(params.id);
 
