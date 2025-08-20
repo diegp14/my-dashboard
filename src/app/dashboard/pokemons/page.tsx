@@ -1,6 +1,12 @@
 import { PokemonGrid, PokemonsResponse, SimplePokemon } from "@/pokemons"
 
 
+export  function metadata() {
+    return {
+        title: 'Listado de pokemones',
+        description: 'Esta es la página de listado de pokemones'
+    };
+}
 
 const getPokemons = async (limit= 20, offset =0): Promise<SimplePokemon[]> => { 
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
