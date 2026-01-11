@@ -61,7 +61,6 @@ const getPokemon = async (name: string): Promise<Pokemon> => {
 
 export default async function PokemonPage(props: Props) {
   const params = await props.params;
-
   const pokemon = await getPokemon(params.name);
 
 
